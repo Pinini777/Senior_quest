@@ -390,6 +390,76 @@ select.blank{font-family:var(--f-code);font-size:19px;font-weight:400;border-rad
 .feedback .trap{border-radius:0}
 
 .brand{white-space:nowrap;flex:none}
+
+/* ================= ancho completo ================= */
+.wrap,.hud-in{max-width:none}
+.narrow{max-width:1500px}
+@media (min-width: 1024px){
+  :root{--gutter:max(40px, env(safe-area-inset-left, 0px));--gutter-r:max(40px, env(safe-area-inset-right, 0px))}
+}
+
+/* inicio: escena pixel a todo el ancho */
+.landing{padding-block:0 var(--s6)}
+.scene{position:relative;margin-inline:calc(-1 * var(--gutter)) calc(-1 * var(--gutter-r));height:clamp(300px, 46vh, 520px);border-bottom:4px solid var(--shadow);background:#080b1d;overflow:hidden}
+.scene canvas{position:absolute;inset:0;width:100%;height:100%;image-rendering:pixelated;image-rendering:crisp-edges}
+.scene-copy{position:relative;height:100%;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;gap:var(--s3);padding:var(--s5) var(--gutter-r) var(--s7) var(--gutter)}
+.scene-eyebrow{color:#c8cff0;text-shadow:2px 2px 0 var(--shadow)}
+.scene .hero-title{font-size:clamp(60px, 11vw, 150px);margin:0;text-shadow:5px 5px 0 #6d3a00,9px 9px 0 var(--shadow)}
+.scene .hero-sub{margin:0;max-width:56ch;color:#dfe4ff;text-shadow:2px 2px 0 var(--shadow)}
+.facts{list-style:none;margin:0 0 var(--s6);padding:0;display:grid;grid-template-columns:repeat(4,1fr);border:2px solid var(--line);border-top:0;background:var(--surface)}
+.facts li{display:flex;align-items:baseline;gap:var(--s3);padding:var(--s4) var(--s5);border-left:2px solid var(--line)}
+.facts li:first-child{border-left:0}
+.facts b{font-family:var(--f-display);font-weight:400;font-size:40px;line-height:.9;color:var(--gold)}
+.facts span{font-family:var(--f-pixel);font-size:12px;color:var(--muted);letter-spacing:.03em}
+
+.picks{grid-template-columns:1fr 1fr;gap:var(--s5)}
+.realm-pick{cursor:default;align-content:start;gap:var(--s4);padding:var(--s5) var(--s6) var(--s6)}
+.realm-pick:hover{transform:none;border-color:var(--c)}
+.realm-pick .top{align-items:flex-end;flex-wrap:wrap}
+.realm-pick h2{font-size:clamp(52px, 5vw, 76px)}
+.realm-pick .icons span{width:48px;height:48px}
+.realm-pick .icons svg{width:26px;height:26px}
+.realm-pick > p{font-size:var(--t-md);max-width:60ch}
+.pick-meter{display:grid;gap:6px}
+.mini-topics{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--s2)}
+.mini-topics button{width:100%;display:grid;grid-template-columns:34px 1fr auto;gap:var(--s3);align-items:center;text-align:left;background:var(--surface-2);border:2px solid var(--line);padding:8px 12px 8px 8px;cursor:pointer;min-height:52px;box-shadow:inset 0 -3px 0 rgba(0,0,0,.25);transition:border-color .12s,transform .08s}
+.mini-topics button:hover{border-color:var(--c);transform:translate(-1px,-1px);box-shadow:3px 3px 0 var(--shadow)}
+.mini-topics button:focus-visible{outline:2px dashed var(--c);outline-offset:-6px}
+.mt-ico{width:34px;height:34px;display:grid;place-items:center;background:var(--bg);border:2px solid var(--line)}
+.mt-ico svg{width:20px;height:20px}
+.mt-name{font-size:var(--t-sm);font-weight:600;line-height:1.25;min-width:0}
+.mt-name .badge-real{font-size:9px}
+.mt-count{font-family:var(--f-code);font-size:17px;color:var(--muted)}
+.pick-go{justify-self:start;min-width:220px;background:var(--c);border-color:var(--c)}
+
+/* pregunta en dos columnas en pantallas anchas */
+@media (min-width: 1100px){
+  .qcard.split{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);gap:var(--s6);align-items:start}
+  .qcard.split .qstem{position:sticky;top:84px}
+  .qcard.split .qstem pre.code{margin-bottom:0;max-height:calc(100vh - 220px);overflow:auto}
+  .qcard:not(.split) .opts{grid-template-columns:1fr 1fr}
+  .qcard:not(.split) .qtext{max-width:none}
+  .review{grid-template-columns:1fr 1fr}
+}
+@media (max-width: 1100px){
+  .mini-topics{grid-template-columns:1fr}
+}
+@media (max-width: 900px){
+  .facts{grid-template-columns:1fr 1fr}
+  .facts li:nth-child(3){border-left:0}
+  .facts li:nth-child(n+3){border-top:2px solid var(--line)}
+  .picks{grid-template-columns:1fr}
+  .mini-topics{grid-template-columns:1fr 1fr}
+}
+@media (max-width: 640px){
+  .scene{height:300px}
+  .scene .hero-title{font-size:60px}
+  .facts li{flex-direction:column;gap:2px;padding:var(--s3) var(--s4)}
+  .facts b{font-size:32px}
+  .realm-pick{padding:var(--s4)}
+  .mini-topics{grid-template-columns:1fr}
+  .pick-go{width:100%}
+}
 @media (max-width: 640px){
   .brand{font-size:23px}
   .hud-in{gap:var(--s2);justify-content:space-between}
@@ -3614,6 +3684,7 @@ function setRealm(r){
 }
 function setView(html, nav, opts = {}){
   clearInterval(timerId); keyHandler = null;
+  if (sceneStop){ sceneStop(); sceneStop = null; }
   document.body.classList.toggle("in-quiz", !!opts.quiz);
   app.innerHTML = `<div class="view">${html}</div>`;
   for (const [id, n] of [["nav-home","home"],["nav-errors","errors"],["nav-grim","grim"]]){
@@ -3636,21 +3707,123 @@ function landing(){
   setRealm(null);
   const pick = r => {
     const qs = realmQs(r), done = mastered(qs);
-    return `<button class="realm-pick ${r}" type="button" data-pick="${r}">
-      <div class="top"><h2>${REALM[r].name}</h2><span class="eyebrow">${qs.length} preguntas</span></div>
+    return `<article class="realm-pick ${r}">
+      <div class="top">
+        <div><span class="eyebrow">Área</span><h2>${REALM[r].name}</h2></div>
+        <div class="icons">${REALM[r].icons.map(i => `<span>${icon(i)}</span>`).join("")}</div>
+      </div>
       <p>${REALM[r].desc}</p>
-      <div class="icons">${REALM[r].icons.map(i => `<span>${icon(i)}</span>`).join("")}</div>
-      <div class="stats"><span>${done} dominadas</span><span>${Math.round(qs.length ? done / qs.length * 100 : 0)}%</span></div>
-      ${progBar(qs.length ? done / qs.length : 0, `${done} de ${qs.length} dominadas`)}
-      <span class="go">Estudiar ${REALM[r].name} →</span>
-    </button>`;
+      <div class="pick-meter">
+        <div class="stats"><span>${done} de ${qs.length} dominadas</span><span>${Math.round(qs.length ? done / qs.length * 100 : 0)}%</span></div>
+        ${progBar(qs.length ? done / qs.length : 0, `${done} de ${qs.length} dominadas`)}
+      </div>
+      <ul class="mini-topics">${realmTopics(r).map(t => {
+        const l = BY_ZONE[t.id] || [], d = mastered(l);
+        return `<li><button type="button" data-jump="${t.id}"><span class="mt-ico">${icon(t.icon)}</span><span class="mt-name">${esc(t.name)}${t.real ? `<span class="badge-real">REAL</span>` : ""}</span><span class="mt-count">${d}/${l.length}</span></button></li>`;
+      }).join("")}</ul>
+      <button class="btn btn-primary pick-go" type="button" data-pick="${r}">Entrar a ${REALM[r].name}</button>
+    </article>`;
   };
+  const all = BANK.length, reals = TOPICS.filter(t => t.real).length;
   setView(`<section class="landing">
-    <h1 class="hero-title">Senior Quest</h1>
-    <p class="hero-sub">Las preguntas de los cuestionarios y parciales de Desarrollo de Software, con la explicación de cada respuesta. Elegí qué parcial preparás.</p>
+    <div class="scene">
+      <canvas id="scene" aria-hidden="true"></canvas>
+      <div class="scene-copy">
+        <span class="eyebrow scene-eyebrow">UTN · Desarrollo de Software · 3er año</span>
+        <h1 class="hero-title">Senior Quest</h1>
+        <p class="hero-sub">Las preguntas de los cuestionarios y parciales, con la explicación de cada respuesta. Elegí qué parcial preparás.</p>
+      </div>
+    </div>
+    <ul class="facts">
+      <li><b>${all}</b><span>preguntas con explicación</span></li>
+      <li><b>${TOPICS.length}</b><span>temas en dos áreas</span></li>
+      <li><b>${reals}</b><span>temas de parciales reales</span></li>
+      <li><b>45:00</b><span>simulacro con nota sobre 10</span></li>
+    </ul>
     <div class="picks">${pick("front")}${pick("back")}</div>
   </section>`, null);
   app.querySelectorAll("[data-pick]").forEach(b => b.onclick = () => { setRealm(b.dataset.pick); home(); });
+  app.querySelectorAll("[data-jump]").forEach(b => b.onclick = e => {
+    e.stopPropagation(); const t = TOPIC[b.dataset.jump]; setRealm(t.realm);
+    startQuiz({title:t.name, icon:t.icon, qs:shuffle(BY_ZONE[t.id]), exam:false, back:home});
+  });
+  sceneStop = drawScene($("#scene"));
+}
+
+/* escena decorativa: cielo nocturno con tramado, montañas y dos torres (Frontend naranja, Backend celeste) */
+let sceneStop = null;
+function drawScene(cv){
+  if (!cv) return null;
+  const PX = 4, ctx = cv.getContext("2d");
+  const BAYER = [[0,8,2,10],[12,4,14,6],[3,11,1,9],[15,7,13,5]];
+  let W = 0, H = 0, stars = [], frame = 0;
+  const rnd = seed => () => (seed = (seed * 16807) % 2147483647) / 2147483647;
+  const sky = ["#05060f","#080b1d","#0c1230","#111a42","#172354"];
+  const put = (x, y, c) => { ctx.fillStyle = c; ctx.fillRect(x, y, 1, 1); };
+  function ridge(r, base, amp, rough){
+    const h = []; let y = base;
+    for (let x = 0; x < W; x++){ y += (r() - .5) * rough; y = Math.max(base - amp, Math.min(base + amp * .4, y)); h.push(Math.round(y)); }
+    return h;
+  }
+  function tower(x0, w, hgt, lit, r){
+    const top = H - hgt, body = "#05060d";
+    ctx.fillStyle = body; ctx.fillRect(x0, top, w, hgt);
+    for (let x = x0; x < x0 + w; x += 2) ctx.fillRect(x, top - 2, 1, 2);           // almenas
+    ctx.fillRect(x0 + (w >> 1) - 1, top - 9, 2, 7);                                // mástil
+    ctx.fillStyle = lit; ctx.fillRect(x0 + (w >> 1) + 1, top - 9, 4, 3);           // bandera
+    for (let y = top + 4; y < H - 4; y += 4)
+      for (let x = x0 + 2; x < x0 + w - 2; x += 3) if (r() > .38) { ctx.fillStyle = lit; ctx.fillRect(x, y, 1, 2); }
+  }
+  function paint(){
+    const r = rnd(7);
+    for (let y = 0; y < H; y++){
+      const t = y / H * (sky.length - 1), i = Math.floor(t), f = t - i;
+      for (let x = 0; x < W; x++){
+        const c = f * 16 > BAYER[y & 3][x & 3] ? sky[Math.min(i + 1, sky.length - 1)] : sky[i];
+        put(x, y, c);
+      }
+    }
+    // resplandor en el horizonte: naranja a la izquierda, celeste a la derecha
+    for (let y = Math.floor(H * .5); y < H; y++){
+      const k = (y - H * .5) / (H * .5);
+      for (let x = 0; x < W; x++){
+        const side = x / W, th = k * 9;
+        if (side < .42 && th * (1 - side / .42) > BAYER[y & 3][x & 3]) put(x, y, "#3a1f1a");
+        if (side > .58 && th * ((side - .58) / .42) > BAYER[y & 3][x & 3]) put(x, y, "#10304a");
+      }
+    }
+    stars = [];
+    for (let n = 0; n < W * H / 90; n++){ const x = Math.floor(r() * W), y = Math.floor(r() * H * .6); stars.push([x, y, r()]); }
+    // luna
+    const mx = Math.floor(W * .76), my = Math.floor(H * .22), mr = Math.max(4, Math.floor(H * .07));
+    for (let y = -mr; y <= mr; y++) for (let x = -mr; x <= mr; x++) if (x * x + y * y <= mr * mr) put(mx + x, my + y, (x + y) < -mr * .6 ? "#fff6d6" : "#e9dcae");
+    const far = ridge(r, Math.floor(H * .62), Math.floor(H * .16), 2.2), near = ridge(r, Math.floor(H * .78), Math.floor(H * .14), 1.6);
+    ctx.fillStyle = "#121a3b"; far.forEach((y, x) => ctx.fillRect(x, y, 1, H - y));
+    ctx.fillStyle = "#0a0f26"; near.forEach((y, x) => ctx.fillRect(x, y, 1, H - y));
+    const tw = Math.max(12, Math.floor(W * .045));
+    tower(Math.floor(W * .07), tw, Math.floor(H * .5), "#ff8a3d", r);
+    tower(Math.floor(W * .07) + tw + 3, Math.floor(tw * .6), Math.floor(H * .32), "#ff8a3d", r);
+    tower(W - Math.floor(W * .07) - tw, tw, Math.floor(H * .56), "#38bdf8", r);
+    tower(W - Math.floor(W * .07) - tw - Math.floor(tw * .6) - 3, Math.floor(tw * .6), Math.floor(H * .36), "#38bdf8", r);
+    ctx.fillStyle = "#04050b"; ctx.fillRect(0, H - 2, W, 2);
+    twinkle();
+  }
+  function twinkle(){
+    frame++;
+    for (const [x, y, s] of stars){
+      const on = ((s * 997 + frame) | 0) % 5 !== 0;
+      put(x, y, on ? (s > .85 ? "#ffffff" : "#8f9bd0") : "#1a2350");
+    }
+  }
+  function fit(){
+    const w = Math.ceil(cv.clientWidth / PX), h = Math.ceil(cv.clientHeight / PX);
+    if (w === W && h === H) return; W = cv.width = w; H = cv.height = h; paint();
+  }
+  fit();
+  const ro = new ResizeObserver(fit); ro.observe(cv);
+  const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const id = reduce ? 0 : setInterval(twinkle, 700);
+  return () => { clearInterval(id); ro.disconnect(); };
 }
 
 /* ---------- panel del área ---------- */
@@ -3759,8 +3932,8 @@ function startQuiz(cfg){
   const render = () => {
     const p = prepare(cfg.qs[S.i]); const q = p.q;
     let sel = new Set(), cursor = 0, answered = false;
-    let body = "";
-    if (q.code != null && q.type !== "F") body += `<pre class="code">${highlight(q.code)}</pre>`;
+    let body = "", stem = "";
+    if (q.code != null && q.type !== "F") stem = `<pre class="code">${highlight(q.code)}</pre>`;
     if (q.type === "Q" || q.type === "M"){
       if (q.type === "M") body += `<p class="hint-line">Marcá todas las opciones correctas.</p>`;
       body += `<ul class="opts" id="opts" role="${q.type === "M" ? "group" : "radiogroup"}" ${q.type === "M" ? "data-multi" : ""}>${p.order.map((o, k) =>
@@ -3768,7 +3941,11 @@ function startQuiz(cfg){
     } else if (q.type === "F"){
       let idx = 0;
       body += `<p class="hint-line">Completá cada casilla desplegable.</p>`;
-      if (q.code != null){ const r = codeWithBlanks(q.code, 0); idx = r.next; body += `<pre class="code">${r.html}</pre>`; }
+      if (q.code != null){
+        const r = codeWithBlanks(q.code, 0); idx = r.next;
+        // con filas aparte, el código va a la izquierda; si los huecos están en el código, ocupa todo
+        if (q.rows.length) stem = `<pre class="code">${r.html}</pre>`; else body += `<pre class="code">${r.html}</pre>`;
+      }
       if (q.rows.length){
         body += `<div class="rows">` + q.rows.map(row => {
           const m = row.match(/^(.*?)\s*⟦/); const label = m ? m[1] : row;
@@ -3788,10 +3965,14 @@ function startQuiz(cfg){
           <div class="tally">${cfg.exam ? `<span class="timer" id="timer" aria-label="Tiempo restante">--:--</span>` : `<span class="ok-t" aria-label="Correctas">✓ ${S.ok}</span><span class="bad-t" aria-label="Incorrectas">✗ ${S.bad}</span>`}</div>
           <div class="bar seg8" role="progressbar" aria-valuemin="0" aria-valuemax="${total}" aria-valuenow="${S.i}"><i style="--p:${S.i / total}"></i></div>
         </div>
-        <section class="panel qcard" id="qcard">
+        <section class="panel qcard ${stem ? "split" : ""}" id="qcard">
+          <div class="qstem">
           <div class="qmeta"><span class="pill acc">${kind}</span><span class="pill">${esc(tp.name)}</span></div>
           ${q.pre ? `<p class="qpre">${fmt(q.pre)}</p>` : ""}
           <h2 class="qtext">${fmt(q.q)}</h2>
+          ${stem}
+          </div>
+          <div class="qans">
           ${body}
           <div id="feedback"></div>
           <div class="qactions">
@@ -3800,6 +3981,7 @@ function startQuiz(cfg){
             <span class="spacer"></span>
             ${q.type === "Q" || q.type === "M" ? `<span class="hint"><span class="kbd">1–${p.order.length}</span> elegir · <span class="kbd">Enter</span> responder</span>` : ""}
             <button class="btn" id="quit" type="button">${cfg.exam ? "Entregar" : "Salir"}</button>
+          </div>
           </div>
         </section>
       </div>`, cfg.nav || "home", {quiz:true});
